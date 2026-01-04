@@ -1,0 +1,16 @@
+{
+  "name": "nomoney",
+  "version": "1.0.0",
+  "description": "NO MONEY. NO HAPPY. - A website for people with no money",
+  "scripts": {
+    "build": "echo 'Static site - no build needed' && exit 0"
+  },
+  "keywords": [
+    "static",
+    "website",
+    "nomoney"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+
