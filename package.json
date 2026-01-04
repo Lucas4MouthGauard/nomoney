@@ -2,9 +2,9 @@
   "name": "nomoney",
   "version": "1.0.0",
   "description": "NO MONEY. NO HAPPY. - A website for people with no money",
+  "main": "index.html",
   "scripts": {
-    "build": "echo 'Static site - no build needed' && exit 0",
-    "vercel-build": "echo 'Static site - no build needed' && exit 0"
+    "build": "echo 'Static site - no build needed'"
   },
   "keywords": [
     "static",
