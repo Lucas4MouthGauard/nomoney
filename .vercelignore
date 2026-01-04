@@ -1,5 +1,4 @@
-# Vercel ignore file
 README.md
+VERCEL_DEPLOYMENT.md
 .gitignore
 .vercelignore
-
