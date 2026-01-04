@@ -6,6 +6,7 @@ const translations = {
         mascotText: "You are not late.\nYou are just poor.",
         manifestoText: "People with money buy early.\nPeople without money buy later.\nEarly buyers get rich.\nLate buyers pay the tax.\nThis time,\nthe tax goes back to the poor.",
         mechanismText: "The less you have,\nthe more you get back.",
+        caLabel: "Contract Address",
         footerSub: "We are still here."
     },
     zh: {
@@ -14,6 +15,7 @@ const translations = {
         mascotText: "你并不晚。\n你只是穷。",
         manifestoText: "有钱人买得早。\n没钱人买得晚。\n早买的人变富。\n晚买的人交税。\n这一次，\n税回到穷人手里。",
         mechanismText: "你拥有的越少，\n得到的回报越多。",
+        caLabel: "合约地址",
         footerSub: "我们依然在这里。"
     }
 };
@@ -25,6 +27,7 @@ let currentLang = 'en';
 document.addEventListener('DOMContentLoaded', function() {
     initLanguageSwitcher();
     initAnimations();
+    initCopyButton();
 });
 
 // Language Switcher
@@ -110,6 +113,12 @@ function switchLanguage(lang) {
         footerSub.textContent = translations[lang].footerSub;
     }
     
+    // Special handling for CA label
+    const caLabel = document.querySelector('.ca-label');
+    if (caLabel) {
+        caLabel.textContent = translations[lang].caLabel;
+    }
+    
     // Update hero title
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
@@ -192,4 +201,48 @@ window.addEventListener('scroll', () => {
     
     lastScroll = currentScroll;
 });
+
+// Copy Contract Address
+function initCopyButton() {
+    const copyBtn = document.getElementById('ca-copy-btn');
+    const caAddress = document.getElementById('ca-address');
+    
+    if (copyBtn && caAddress) {
+        copyBtn.addEventListener('click', async function() {
+            const address = caAddress.textContent;
+            
+            try {
+                await navigator.clipboard.writeText(address);
+                
+                // Visual feedback
+                const originalHTML = copyBtn.innerHTML;
+                copyBtn.classList.add('copied');
+                copyBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerHTML = originalHTML;
+                }, 2000);
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = address;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    copyBtn.classList.add('copied');
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                } catch (e) {
+                    console.error('Failed to copy:', e);
+                }
+                document.body.removeChild(textArea);
+            }
+        });
+    }
+}
 
